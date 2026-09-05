@@ -6,6 +6,9 @@ of the ancient world. Optionally overlays Thucydides for comparison.
 
 ![layers](https://img.shields.io/badge/places-554-blue) ![mentions](https://img.shields.io/badge/mentions-7298-blue) ![zh](https://img.shields.io/badge/中文译名-391-green)
 
+**[▶ Open the live map](https://Opiowo.github.io/herodotus-map/herodotus_map.html)**
+(live once GitHub Pages is enabled — see *Viewing the map* below)
+
 ## What it does
 
 1. Downloads the Macaulay translation of Herodotus from Project Gutenberg
@@ -58,6 +61,18 @@ python herodotus_map.py --top 30           # print the 30 most-named places
 
 Output lands in `output/`: `herodotus_map.html` and `herodotus_mentions.csv`.
 Downloads are cached in `data/`, so only the first run pays for them.
+
+### Viewing the map
+
+A pre-built copy sits at the repository root as `herodotus_map.html` (2.6 MB —
+too large for GitHub's file preview, so open it via Pages or download it).
+
+To publish it: **Settings → Pages → Source: Deploy from a branch → main / (root)
+→ Save**. After a minute it is live at
+`https://Opiowo.github.io/herodotus-map/herodotus_map.html`.
+
+Rebuilding the map overwrites `output/herodotus_map.html`; copy it to the root
+to update the published version.
 
 ### Chinese place names
 
