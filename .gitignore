@@ -1,0 +1,35 @@
+# --------------------------------------------------------------------------
+# Copyrighted source material -- never commit
+# --------------------------------------------------------------------------
+# Screenshots of 徐松岩's published translation, and anything transcribed
+# verbatim from it. The derived name table (data/zh_names.csv) is fine:
+# it holds only id-to-placename correspondences, not the book's prose.
+data/index_shots/
+data/index_ocr_raw.txt
+data/index_parsed.csv
+
+# --------------------------------------------------------------------------
+# Downloaded corpora and gazetteer dumps -- refetched by the scripts
+# --------------------------------------------------------------------------
+data/pg*.txt
+data/pleiades-*.csv.gz
+
+# --------------------------------------------------------------------------
+# Generated output -- rebuilt by `python herodotus_map.py`
+# The built map is committed at the repo root (herodotus_map.html) so GitHub
+# Pages can serve it; the working copy under output/ stays ignored.
+# --------------------------------------------------------------------------
+output/
+data/zh_wikidata.qids.json
+
+# --------------------------------------------------------------------------
+# Local working files
+# --------------------------------------------------------------------------
+.snapshots/
+__pycache__/
+*.py[cod]
+.band_*.png
+.ipynb_checkpoints/
+.venv/
+venv/
+.DS_Store
