@@ -7,7 +7,11 @@ of the ancient world. Optionally overlays Thucydides for comparison.
 ![layers](https://img.shields.io/badge/places-554-blue) ![mentions](https://img.shields.io/badge/mentions-7298-blue) ![zh](https://img.shields.io/badge/中文译名-391-green)
 
 **[▶ Open the live map](https://Opiowo.github.io/herodotus-map/herodotus_map.html)**
-(live once GitHub Pages is enabled — see *Viewing the map* below)
+
+[![Herodotus place map](docs/screenshot.jpg)](https://Opiowo.github.io/herodotus-map/herodotus_map.html)
+
+*Book I plotted on the Digital Atlas of the Roman Empire. Circle size tracks
+how often a place is named; the legend gives length-normalised density per book.*
 
 ## What it does
 
@@ -39,11 +43,12 @@ same place.
 
 ## Two findings worth noting
 
-**Book II is the least place-dense, not the shortest.** Raw counts suggest
-Book II (248 mentions) is sparse next to Book VII (545). Normalised by length
-it is the *lowest* density in the work — 6.6 mentions per 1,000 words against
-Book V's 19.2. The Egyptian digression spends its words on customs and the
-Nile, not on naming places.
+**Raw counts mislead about the Egyptian digression.** Book II looks sparse
+next to Book VII (743 mentions against 964), and Book VII looks like the
+place-dense one. Normalised by length the ranking inverts: Book VII drops to
+22.9 mentions per 1,000 words while Book V reaches 35.4, and Book II sits near
+the bottom at 19.9. Books II and III spend their words on customs, geography
+and the Nile rather than on naming places.
 
 **Herodotus and Thucydides share a centre but not an edge.** Median distance
 from Halikarnassos is nearly identical (452 km vs 470 km). The difference is
