@@ -872,7 +872,7 @@ def build_map(hits: list[Hit], places: dict[str, Place], out: Path,
     search_geo.add_to(m)
     Search(layer=search_geo, search_label="title",
            placeholder="搜索地名 / Search a place…",
-           collapsed=False, position="topright").add_to(m)
+           collapsed=True, position="topright").add_to(m)
 
     # ---- Co-occurrence network: places named in the same chapter ----
     edges = cooccurrence(hits, places,
@@ -944,7 +944,16 @@ def build_map(hits: list[Hit], places: dict[str, Place], out: Path,
             f"<td style='padding-left:8px;text-align:right'>{r['per_1000']:.1f}</td></tr>"
             for r in density)
         legend = folium.Element(f"""
-<div style="position:fixed;bottom:24px;left:12px;z-index:9999;
+<button id="density-legend-toggle" aria-expanded="false"
+        aria-controls="density-legend" aria-label="Show place-density legend"
+        style="position:fixed;bottom:calc(48px + env(safe-area-inset-bottom));
+               left:12px;z-index:10000;width:44px;height:44px;
+               border-radius:50%;border:1px solid #c9bfae;
+               background:rgba(255,252,245,.94);box-shadow:0 1px 6px rgba(0,0,0,.25);
+               font-size:18px;line-height:1;cursor:pointer;padding:0">📊</button>
+<div id="density-legend" style="display:none;position:fixed;
+            bottom:calc(100px + env(safe-area-inset-bottom));left:12px;z-index:9999;
+            max-width:calc(100vw - 24px);overflow:auto;box-sizing:border-box;
             background:rgba(255,252,245,.94);border:1px solid #c9bfae;
             border-radius:4px;padding:10px 12px;font:12px/1.4 Georgia,serif;
             box-shadow:0 1px 6px rgba(0,0,0,.2)">
@@ -952,10 +961,42 @@ def build_map(hits: list[Hit], places: dict[str, Place], out: Path,
   <table style="border-collapse:collapse">{bars}</table>
   <div style="margin-top:6px;color:#666;font-size:11px">
     Length-normalised: Book II is the <i>least</i> place-dense, not the shortest.</div>
-</div>""")
+</div>
+<script>
+(function() {{
+  var btn = document.getElementById('density-legend-toggle');
+  var box = document.getElementById('density-legend');
+  btn.addEventListener('click', function() {{
+    var open = box.style.display !== 'none';
+    box.style.display = open ? 'none' : 'block';
+    btn.setAttribute('aria-expanded', String(!open));
+    btn.setAttribute('aria-label',
+      open ? 'Show place-density legend' : 'Hide place-density legend');
+  }});
+}})();
+</script>""")
         m.get_root().html.add_child(legend)
 
-    folium.LayerControl(collapsed=False).add_to(m)
+    # ---- Mobile-friendly tweaks (iPhone-class screens) ----
+    mobile_css = folium.Element("""
+<style>
+@media (max-width: 700px) {
+  .leaflet-control-minimap { display: none !important; }
+  .leaflet-control-layers-toggle,
+  .leaflet-control-search .search-button,
+  .leaflet-control-fullscreen a,
+  .leaflet-control-zoom a {
+    width: 44px !important;
+    height: 44px !important;
+    line-height: 44px !important;
+  }
+  .leaflet-control-search { max-width: calc(100vw - 90px); }
+  .leaflet-control-search .search-input { font-size: 16px; }
+}
+</style>""")
+    m.get_root().html.add_child(mobile_css)
+
+    folium.LayerControl(collapsed=True).add_to(m)
     Fullscreen().add_to(m)
     # MiniMap defaults to the official OSM tile server, which returns 403s
     # for non-browser/no-Referer requests (e.g. opening the file over file://).
@@ -964,7 +1005,7 @@ def build_map(hits: list[Hit], places: dict[str, Place], out: Path,
         tiles="https://server.arcgisonline.com/ArcGIS/rest/services/"
               "World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}",
         attr="Esri", max_zoom=13)
-    MiniMap(tile_layer=minimap_tiles, toggle_display=False).add_to(m)
+    MiniMap(tile_layer=minimap_tiles, toggle_display=True).add_to(m)
     out.parent.mkdir(parents=True, exist_ok=True)
     m.save(str(out))
     print(f"  map       : {out}")
